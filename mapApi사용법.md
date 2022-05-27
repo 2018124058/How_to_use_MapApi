@@ -121,3 +121,74 @@ for (var i = 0; i < normal_positions.length; i ++) {
 }
 ```
 ![마킹 구분한 지도](map_marking.JPG)
+
+## Geocoding, Reverse Geocoding 
+- `services` 라이브러리 불러오기  
+`<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=APIKEY&libraries=services"></script>` 
+### 좌표 -> 주소 
+- 주소-좌표 변환 객체를 생성 `var geocoder = new kakao.maps.services.Geocoder();`  
+- `Geocoder`객체의 `coord2detailaddr` 메소드를 이용해 위치 좌표에 대한 상세주소정보(도로명주소, 지번주소) 리턴 가능(건물이 없는 경우 지번주소만) 
+- `coord2RegionCode(x, y, callback, options)`  
+    - `x`: x 좌표, 경도
+    - `y`: y 좌표, 위도  
+    - `callback`: 검색 결과를 받을 콜백함수  
+    - `options`: optional  
+
+    - 결과: `result`라는 array  
+        - `result[0].address_name`: 도로명 주소  
+        - `result[1].address_name`: 지번 주소  
+
+```
+// 예시 코드  
+var geocoder = new kakao.maps.services.Geocoder();
+
+var callback = function(result, status) {
+    if (status === kakao.maps.services.Status.OK) {
+
+        console.log('지역 명칭 : ' + result[0].address_name);
+        console.log('행정구역 코드 : ' + result[0].code);
+    }
+};
+
+geocoder.coord2RegionCode(126.9786567, 37.566826, callback);
+```
+#### 위도 경도 구하기  
+```
+var latlng = new kakao.maps.LatLng(37, 127);
+latlng.getLat(); // 37 위도
+latlng.getLng(); // 127 경도 
+```
+ 
+ # 사용자 위치 표시 (geolocation)
+ ```
+ // HTML5의 geolocation으로 사용할 수 있는지 확인합니다 
+if (navigator.geolocation) {
+    
+    // GeoLocation을 이용해서 접속 위치를 얻어옵니다
+    navigator.geolocation.getCurrentPosition(function(position) {
+        
+        var lat = position.coords.latitude, // 위도
+            lon = position.coords.longitude; // 경도
+        
+        var locPosition = new kakao.maps.LatLng(lat, lon), // 마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성합니다
+        displayMarker(locPosition);
+
+      });
+    
+} else { // HTML5의 GeoLocation을 사용할 수 없을때 
+    
+    var locPosition = new kakao.maps.LatLng(33.450701, 126.570667) 
+    displayMarker(locPosition);
+}
+
+// 지도에 마커 표시하는 함수입니다
+function displayMarker(locPosition) {
+
+    // 마커를 생성합니다
+    var marker = new kakao.maps.Marker({  
+        map: map, 
+        position: locPosition
+    }); 
+    // 지도 중심좌표를 접속위치로 변경합니다
+    map.setCenter(locPosition);      
+}    
