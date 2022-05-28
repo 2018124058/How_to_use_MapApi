@@ -10,7 +10,7 @@
 ```
 <body>
     <!--지도를 담을 영역-->
-    <div id = "basic-map" style = "width:500px; height: 400px;"></div>
+    <div id = "map" style = "width:500px; height: 400px;"></div>
     <!--지도 api 불러오기-->
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=키 입력"></script>
     
@@ -30,7 +30,8 @@
     - `container`: 지도를 담을 영역(html element)  
     - `options`  (dict 형태)
         - `center`: 반드시 필요. LatLng의 객체로 위도와 경도 값을 순서대로 주어야 한다  
-            `center: new kakao.maps.LatLng(위도, 경도)`  
+            `center: new kakao.maps.LatLng(위도, 경도)` 
+        - `draggable: false` 지도 이동, 확대 축소 불가  
 
 - 스크롤바로 지도 확대 및 축소 가능  
 - 마우스로 지도 위치 이동 가능  
