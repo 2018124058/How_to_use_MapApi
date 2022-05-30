@@ -19,5 +19,7 @@ from MapApp import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.home, name='home')
+    path('', views.home, name='home'),
+    path('new_concert/', views.concert_form, name='concert_form'),
+    path('create/', views.create, name='create'),
 ]
