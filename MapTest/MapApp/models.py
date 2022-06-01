@@ -10,7 +10,7 @@ class Concert(models.Model):
     date = models.DateField()
     time = models.TimeField()
     latitude = models.TextField()  # 위도
-    logitude = models.TextField() # 경도
+    longitude = models.TextField() # 경도
 
     # 즐겨찾기 여부
 
