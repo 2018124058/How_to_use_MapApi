@@ -20,6 +20,8 @@
     <!--공연 정보 리스트를 담을 곳-->
     <section id = "inform_list"> 
     </section>
+
+    <a href="{% url 'login_home' %}">로그인 후 홈화면</a>
     
     <script>
         // 지도 생성 및 영역에 담기
@@ -27,7 +29,7 @@
 		var options = {
 			center: new kakao.maps.LatLng(37.55534870467689, 126.93710965061135),
 			level: 3,
-            //draggable: false
+            draggable: false
 		};
 
 		var home_map = new kakao.maps.Map(container, options);
